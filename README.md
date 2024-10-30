@@ -5,3 +5,9 @@ A Machine Learning project with the goal to model the evolution of topics in 147
 18.10.2024:
 - implemented an XML to CSV Converter, for large body of text (downloaded from DTA, Creative Commons licence)
 
+24.10.2024:
+- implemented text_preprocessor
+- created Database
+
+30.10.2024:
+- finished ml_model, got it to run

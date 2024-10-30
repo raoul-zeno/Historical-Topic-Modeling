@@ -1,11 +1,7 @@
 import pandas as pd
-import nltk
 import unicodedata
 import re
 import sqlite3
-from nltk.corpus import stopwords
-
-
 
 con = sqlite3.connect("Database.db")
 cur = con.cursor()
@@ -64,6 +60,7 @@ def add_pp_texts_to_database():
         result_text = preprocess_text(example_text[0])
         cur.execute("UPDATE books SET preprocessed_text=? WHERE text_index=?", (result_text, i,))
     con.commit()
+
 
 
 
