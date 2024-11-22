@@ -2,6 +2,7 @@ import pandas as pd
 import unicodedata
 import re
 import sqlite3
+import time
 
 con = sqlite3.connect("Database.db")
 cur = con.cursor()
@@ -34,7 +35,7 @@ def preprocess_text(text):
     result_text = re.sub(r"n\u0303", "d", result_text)
 
     #remove unneeded special characters
-    pattern = r"[/;:.,()\[\]\"\"*]"
+    pattern = r"[/;:,()\[\]\"\"*]"
     result_text = re.sub(pattern, "", result_text)
 
     #remove \n and -\n
@@ -53,14 +54,18 @@ def preprocess_text(text):
     return result_text
     
 def add_pp_texts_to_database():
-    number_of_entries = cur.execute("SELECT COUNT(*) FROM books").fetchone()
+    number_of_entries = cur.execute("SELECT COUNT(*) FROM my_data").fetchone()
     for i in range(number_of_entries[0]):
-        example_textObj = cur.execute("SELECT text FROM books WHERE text_index=?", (i,))
+        start = time.time()
+        example_textObj = cur.execute("SELECT text FROM my_data WHERE text_index=?", (i,))
         example_text = example_textObj.fetchone()
         result_text = preprocess_text(example_text[0])
-        cur.execute("UPDATE books SET preprocessed_text=? WHERE text_index=?", (result_text, i,))
+        cur.execute("UPDATE my_data SET preprocessed_text=? WHERE text_index=?", (result_text, i,))
+        end = time.time()
+        print(f"ID {i} has taken {end - start} seconds")
     con.commit()
 
+add_pp_texts_to_database()
 
 
 

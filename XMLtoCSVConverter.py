@@ -2,10 +2,14 @@ import pandas as pd
 import pprint as pp
 import os
 import xml.etree.ElementTree as ET
+import sqlite3
 
-xml_directory = r"#################"
+xml_directory = r"/workspace/dta_komplett_2021-05-13"
 
 data = []
+
+con = sqlite3.connect("Database.db")
+cur = con.cursor()
 
 def extract_text(text_element):
     text_content = []
@@ -59,9 +63,8 @@ for file_name in os.listdir(xml_directory):
 
 df = pd.DataFrame(data)
 
-df.to_csv("output_csv_definitive", index=False, encoding="utf-8")
+df.to_sql("my_data", con, index=True, if_exists="replace")
 
-print("Created a csv-file!")
 
 
 

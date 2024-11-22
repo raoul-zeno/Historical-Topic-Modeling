@@ -15,7 +15,7 @@ def make_documents():
 
 def train_model():
     documents = make_documents()
-    model = Top2Vec(documents=documents, embedding_model="universal-sentence-encoder-multilingual", speed="fast")
+    model = Top2Vec(documents=documents, embedding_model="universal-sentence-encoder-multilingual", speed="fast-learn", gpu_umap=True, gpu_hdbscan=True)
     return model
 
 model = train_model()
