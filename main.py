@@ -1,8 +1,8 @@
-import sqlite3
+from bertopic import BERTopic
+from sklearn.datasets import fetch_20newsgroups
 
-con = sqlite3.connect("Database.db")
-cur = con.cursor()
+docs = fetch_20newsgroups(subset="all", remove=("headers", "footers", "quotes"))["data"]
+topic_model = BERTopic(verbose=True)
+topics, probs = topic_model.fit_transform(docs)
 
-example_text = cur.execute("SELECT preprocessed_text FROM my_data WHERE text_index=4435").fetchone()
-
-print(example_text[0])
+topic_model.visualize_topics().show()

@@ -65,7 +65,11 @@ def add_pp_texts_to_database():
         print(f"ID {i} has taken {end - start} seconds")
     con.commit()
 
-add_pp_texts_to_database()
+def main():
+    add_pp_texts_to_database()
+
+if __name__ == "__main__":
+    main()
 
 
 
